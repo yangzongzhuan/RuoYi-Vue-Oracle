@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.monitor.mapper.SysOperLogMapper">
+
+	<resultMap type="SysOperLog" id="SysOperLogResult">
+		<id     property="operId"         column="oper_id"        />
+		<result property="title"          column="title"          />
+		<result property="businessType"   column="business_type"  />
+		<result property="method"         column="method"         />
+		<result property="requestMethod"  column="request_method" />
+		<result property="operatorType"   column="operator_type"  />
+		<result property="operName"       column="oper_name"      />
+		<result property="deptName"       column="dept_name"      />
+		<result property="operUrl"        column="oper_url"       />
+		<result property="operIp"         column="oper_ip"        />
+		<result property="operLocation"   column="oper_location"  />
+		<result property="operParam"      column="oper_param"     />
+		<result property="jsonResult"     column="json_result"    />
+		<result property="status"         column="status"         />
+		<result property="errorMsg"       column="error_msg"      />
+		<result property="operTime"       column="oper_time"      />
+	</resultMap>
+
+	<sql id="selectOperLogVo">
+        select oper_id, title, business_type, method, request_method, operator_type, oper_name, dept_name, oper_url, oper_ip, oper_location, oper_param, json_result, status, error_msg, oper_time
+        from sys_oper_log
+    </sql>
+    
+	<insert id="insertOperlog" parameterType="SysOperLog">
+		<selectKey keyProperty="operId" resultType="long" order="BEFORE">
+			SELECT seq_sys_oper_log.NEXTVAL as operId FROM DUAL
+		</selectKey>
+		insert into sys_oper_log(
+			<if test="operId != null and operId != 0">oper_id,</if>
+			<if test="title != null and title != ''">title,</if>
+			<if test="businessType != null and businessType != ''">business_type,</if>
+			<if test="method != null and method != ''">method,</if>
+			<if test="requestMethod != null and requestMethod != ''">request_method,</if>
+			<if test="operatorType != null and operatorType != ''">operator_type,</if>
+			<if test="operName != null and operName != ''">oper_name,</if>
+			<if test="deptName != null and deptName != ''">dept_name,</if>
+			<if test="operUrl != null and operUrl != ''">oper_url,</if>
+			<if test="operIp != null and operIp != ''">oper_ip,</if>
+			<if test="operLocation != null and operLocation != ''">oper_location,</if>
+			<if test="operParam != null and operParam != ''">oper_param,</if>
+			<if test="jsonResult != null and jsonResult != ''">json_result,</if>
+			<if test="status != null and status != ''">status,</if>
+			<if test="errorMsg != null and errorMsg != ''">error_msg,</if>
+			oper_time
+		)values(
+			<if test="operId != null and operId != 0">#{operId},</if>
+			<if test="title != null and title != ''">#{title},</if>
+			<if test="businessType != null and businessType != ''">#{businessType},</if>
+			<if test="method != null and method != ''">#{method},</if>
+			<if test="requestMethod != null and requestMethod != ''">#{requestMethod},</if>
+			<if test="operatorType != null and operatorType != ''">#{operatorType},</if>
+			<if test="operName != null and operName != ''">#{operName},</if>
+			<if test="deptName != null and deptName != ''">#{deptName},</if>
+			<if test="operUrl != null and operUrl != ''">#{operUrl},</if>
+			<if test="operIp != null and operIp != ''">#{operIp},</if>
+			<if test="operLocation != null and operLocation != ''">#{operLocation},</if>
+			<if test="operParam != null and operParam != ''">#{operParam},</if>
+			<if test="jsonResult != null and jsonResult != ''">#{jsonResult},</if>
+			<if test="status != null and status != ''">#{status},</if>
+			<if test="errorMsg != null and errorMsg != ''">#{errorMsg},</if>
+			sysdate
+		)
+	</insert>
+	
+	<select id="selectOperLogList" parameterType="SysOperLog" resultMap="SysOperLogResult">
+		<include refid="selectOperLogVo"/>
+		<where>
+			<if test="title != null and title != ''">
+				AND title like concat(concat('%',#{title}),'%')
+			</if>
+			<if test="businessType != null and businessType != ''">
+				AND business_type = #{businessType}
+			</if>
+			<if test="businessTypes != null and businessTypes.length > 0">
+			    AND business_type in
+			    <foreach collection="businessTypes" item="businessType" open="(" separator="," close=")">
+		 			#{businessType}
+		        </foreach> 
+			</if>
+			<if test="status != null">
+				AND status = #{status}
+			</if>
+			<if test="operName != null and operName != ''">
+				AND oper_name like concat(concat('%',#{operName}),'%')
+			</if>
+			<if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+				and oper_time &gt;= to_date(#{beginTime},'yyyy-MM-dd HH24:mi:ss')
+			</if>
+			<if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+				and oper_time &lt;= to_date(#{endTime},'yyyy-MM-dd HH24:mi:ss')
+			</if>
+		</where>
+		order by oper_id desc
+	</select>
+	
+	<delete id="deleteOperLogByIds" parameterType="Long">
+ 		delete from sys_oper_log where oper_id in
+ 		<foreach collection="array" item="operId" open="(" separator="," close=")">
+ 			#{operId}
+        </foreach> 
+ 	</delete>
+ 	
+ 	<select id="selectOperLogById" parameterType="Long" resultMap="SysOperLogResult">
+		<include refid="selectOperLogVo"/>
+		where oper_id = #{operId}
+	</select>
+	
+	<update id="cleanOperLog">
+        truncate table sys_oper_log
+    </update>
+
+</mapper> 

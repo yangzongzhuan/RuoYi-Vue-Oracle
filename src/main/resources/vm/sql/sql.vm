@@ -1,0 +1,29 @@
+-- 菜单 SQL
+insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, is_frame, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values(${table.menuId}, '${functionName}', '3', '1', '${businessName}', '${moduleName}/${businessName}/index', 1, 'C', '0', '0', '${permissionPrefix}:list', '#', 'admin', '2018-03-01', 'ry', '2018-03-01', '${functionName}菜单');
+
+-- 按钮 SQL
+insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, is_frame, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values(seq_sys_menu.nextval, '${functionName}查询', ${table.menuId}, '1',  '#', '', 1,  'F', '0',  '0', '${permissionPrefix}:query',        '#', 'admin', '2018-03-01', 'ry', '2018-03-01', '');
+
+insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, is_frame, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values(seq_sys_menu.nextval, '${functionName}新增', ${table.menuId}, '2',  '#', '', 1,  'F', '0',  '0', '${permissionPrefix}:add',          '#', 'admin', '2018-03-01', 'ry', '2018-03-01', '');
+
+insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, is_frame, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values(seq_sys_menu.nextval, '${functionName}修改', ${table.menuId}, '3',  '#', '', 1,  'F', '0',  '0', '${permissionPrefix}:edit',         '#', 'admin', '2018-03-01', 'ry', '2018-03-01', '');
+
+insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, is_frame, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values(seq_sys_menu.nextval, '${functionName}删除', ${table.menuId}, '4',  '#', '', 1,  'F', '0',  '0', '${permissionPrefix}:remove',       '#', 'admin', '2018-03-01', 'ry', '2018-03-01', '');
+
+insert into sys_menu (menu_id, menu_name, parent_id, order_num, path, component, is_frame, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values(seq_sys_menu.nextval, '${functionName}导出', ${table.menuId}, '5',  '#', '', 1,  'F', '0',  '0', '${permissionPrefix}:export',       '#', 'admin', '2018-03-01', 'ry', '2018-03-01', '');
+
+#if($pkColumn.increment)
+-- ${tableName}主键序列
+create sequence seq_${tableName}
+increment by 1
+start with 10
+nomaxvalue
+nominvalue
+cache 20;
+#end
