@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and r.create_time &lt;= to_date(#{endTime},'yyyy-MM-dd HH24:mi:ss')
 		</if>
 		<!-- 数据范围过滤 -->
-		${dataScope}
+		${params.dataScope}
 		order by r.role_sort
 	</select>
     
