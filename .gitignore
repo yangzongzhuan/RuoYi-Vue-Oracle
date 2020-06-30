@@ -41,3 +41,6 @@ nbdist/
 !*/build/*.java
 !*/build/*.html
 !*/build/*.xml
+
+.ssh/*
+.gitignore
