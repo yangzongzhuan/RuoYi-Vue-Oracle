@@ -20,7 +20,7 @@ import com.ruoyi.project.system.domain.SysUser;
 
 /**
  * 数据过滤处理
- * 
+ *
  * @author ruoyi
  */
 @Aspect
@@ -93,7 +93,7 @@ public class DataScopeAspect
 
     /**
      * 数据范围过滤
-     * 
+     *
      * @param joinPoint 切点
      * @param user 用户
      * @param alias 别名
@@ -123,7 +123,7 @@ public class DataScopeAspect
             else if (DATA_SCOPE_DEPT_AND_CHILD.equals(dataScope))
             {
                 sqlString.append(StringUtils.format(
-                        " OR {}.dept_id IN ( SELECT dept_id FROM sys_dept WHERE dept_id = {} or FIND_IN_SET( {} , ancestors ) )",
+                        " OR {}.dept_id IN ( SELECT dept_id FROM sys_dept WHERE dept_id = {} or INSTR(','||ANCESTORS||',',',{},')<>0 )",
                         deptAlias, user.getDeptId(), user.getDeptId()));
             }
             else if (DATA_SCOPE_SELF.equals(dataScope))
