@@ -77,8 +77,10 @@ public class SysUser extends BaseEntity
     private Date loginDate;
 
     /** 部门对象 */
-    @Excels({ @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
-            @Excel(name = "部门负责人", targetAttr = "leader", type = Type.EXPORT) })
+    @Excels({
+        @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
+        @Excel(name = "部门负责人", targetAttr = "leader", type = Type.EXPORT)
+    })
     private SysDept dept;
 
     /** 角色对象 */
