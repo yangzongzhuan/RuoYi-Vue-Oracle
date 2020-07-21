@@ -77,6 +77,12 @@ public class GenTable extends BaseEntity
     /** 菜单id **/
     private Long menuId;
 
+    /** 上级菜单ID字段 */
+    private String parentMenuId;
+
+    /** 上级菜单名称字段 */
+    private String parentMenuName;
+
     public Long getTableId()
     {
         return tableId;
@@ -235,6 +241,26 @@ public class GenTable extends BaseEntity
     public void setTreeName(String treeName)
     {
         this.treeName = treeName;
+    }
+
+    public String getParentMenuId()
+    {
+        return parentMenuId;
+    }
+
+    public void setParentMenuId(String parentMenuId)
+    {
+        this.parentMenuId = parentMenuId;
+    }
+
+    public String getParentMenuName()
+    {
+        return parentMenuName;
+    }
+
+    public void setParentMenuName(String parentMenuName)
+    {
+        this.parentMenuName = parentMenuName;
     }
 
     public boolean isTree()
