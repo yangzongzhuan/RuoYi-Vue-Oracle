@@ -883,7 +883,7 @@ create table sys_notice (
   notice_id         number(20)      not null,
   notice_title      varchar2(50)    not null,
   notice_type       char(1)         not null,
-  notice_content    varchar2(2000)  default null,
+  notice_content    blob            default null,
   status            char(1)         default '0',
   create_by         varchar2(64)    default '',
   create_time       date,
