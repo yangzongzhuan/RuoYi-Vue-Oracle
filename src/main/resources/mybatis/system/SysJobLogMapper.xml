@@ -35,10 +35,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="invokeTarget != null and invokeTarget != ''">
 				AND invoke_target like concat(concat('%', #{invokeTarget}), '%')
 			</if>
-			<if test="params.params.beginTime != null and params.params.beginTime != ''"><!-- 开始时间检索 -->
+			<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
 				and create_time &gt;= to_date(#{params.params.beginTime},'yyyy-MM-dd HH24:mi:ss')
 			</if>
-			<if test="params.params.endTime != null and params.params.endTime != ''"><!-- 结束时间检索 -->
+			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
 				and create_time &lt;= to_date(#{params.params.endTime},'yyyy-MM-dd HH24:mi:ss')
 			</if>
 		</where>
