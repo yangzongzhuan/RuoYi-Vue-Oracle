@@ -57,7 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		delete from sys_job_log where job_log_id = #{jobLogId}
  	</delete>
  	
- 	<delete id="deleteJobLogByIds" parameterType="String">
+ 	<delete id="deleteJobLogByIds" parameterType="Long">
  		delete from sys_job_log where job_log_id in
  		<foreach collection="array" item="jobLogId" open="(" separator="," close=")">
  			#{jobLogId}
