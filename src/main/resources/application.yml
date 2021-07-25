@@ -100,7 +100,6 @@ mybatis:
 # PageHelper分页插件
 pagehelper: 
   helperDialect: oracle
-  reasonable: true
   supportMethodsArguments: true
   params: count=countSql 
 
