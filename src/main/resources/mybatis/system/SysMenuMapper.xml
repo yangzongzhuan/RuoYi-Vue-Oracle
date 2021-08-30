@@ -64,10 +64,10 @@
             AND m.menu_name like concat(concat('%', #{menuName}), '%')
 		</if>
 		<if test="visible != null and visible != ''">
-            AND visible = #{visible}
+            AND m.visible = #{visible}
 		</if>
 		<if test="status != null and status != ''">
-            AND status = #{status}
+            AND m.status = #{status}
 		</if>
 		order by m.parent_id, m.order_num
 	</select>
