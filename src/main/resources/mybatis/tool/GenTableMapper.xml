@@ -89,6 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="tableComment != null and tableComment != ''">
 			AND lower(dtc.comments) like lower(concat(concat('%', #{tableComment}), '%'))
 		</if>
+        order by create_time desc
 	</select>
 	
 	<select id="selectDbTableListByNames" resultMap="GenTableResult">
