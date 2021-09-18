@@ -4,10 +4,8 @@ import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,16 +47,9 @@ public class RateLimiterAspect
         this.limitScript = limitScript;
     }
 
-    // 配置织入点
-    @Pointcut("@annotation(com.ruoyi.framework.aspectj.lang.annotation.RateLimiter)")
-    public void rateLimiterPointCut()
+    @Before("@annotation(rateLimiter)")
+    public void doBefore(JoinPoint point, RateLimiter rateLimiter) throws Throwable
     {
-    }
-
-    @Before("rateLimiterPointCut()")
-    public void doBefore(JoinPoint point) throws Throwable
-    {
-        RateLimiter rateLimiter = getAnnotationRateLimiter(point);
         String key = rateLimiter.key();
         int time = rateLimiter.time();
         int count = rateLimiter.count();
@@ -84,33 +75,17 @@ public class RateLimiterAspect
         }
     }
 
-    /**
-     * 是否存在注解，如果存在就获取
-     */
-    private RateLimiter getAnnotationRateLimiter(JoinPoint joinPoint)
-    {
-        Signature signature = joinPoint.getSignature();
-        MethodSignature methodSignature = (MethodSignature) signature;
-        Method method = methodSignature.getMethod();
-
-        if (method != null)
-        {
-            return method.getAnnotation(RateLimiter.class);
-        }
-        return null;
-    }
-
     public String getCombineKey(RateLimiter rateLimiter, JoinPoint point)
     {
         StringBuffer stringBuffer = new StringBuffer(rateLimiter.key());
         if (rateLimiter.limitType() == LimitType.IP)
         {
-            stringBuffer.append(IpUtils.getIpAddr(ServletUtils.getRequest()));
+            stringBuffer.append(IpUtils.getIpAddr(ServletUtils.getRequest())).append("-");
         }
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
         Class<?> targetClass = method.getDeclaringClass();
-        stringBuffer.append("-").append(targetClass.getName()).append("- ").append(method.getName());
+        stringBuffer.append(targetClass.getName()).append("-").append(method.getName());
         return stringBuffer.toString();
     }
 }
