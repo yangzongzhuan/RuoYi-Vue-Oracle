@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.ruoyi.common.enums.UserStatus;
 import com.ruoyi.common.exception.ServiceException;
@@ -26,12 +25,15 @@ public class UserDetailsServiceImpl implements UserDetailsService
 
     @Autowired
     private ISysUserService userService;
+    
+    @Autowired
+    private SysPasswordService passwordService;
 
     @Autowired
     private SysPermissionService permissionService;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
+    public UserDetails loadUserByUsername(String username)
     {
         SysUser user = userService.selectUserByUserName(username);
         if (StringUtils.isNull(user))
@@ -49,6 +51,8 @@ public class UserDetailsServiceImpl implements UserDetailsService
             log.info("登录用户：{} 已被停用.", username);
             throw new ServiceException("对不起，您的账号：" + username + " 已停用");
         }
+
+        passwordService.validate(user);
 
         return createLoginUser(user);
     }
