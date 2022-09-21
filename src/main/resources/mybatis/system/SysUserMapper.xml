@@ -73,10 +73,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			AND u.phonenumber like concat(concat('%',#{phonenumber}),'%')
 		</if>
 		<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-			AND u.create_time &gt;= to_date(#{params.beginTime},'yyyy-MM-dd HH24:mi:ss')
+			AND to_char(u.create_time, 'yyyy-mm-dd') &gt;= #{params.beginTime}
 		</if>
 		<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-			AND u.create_time &lt;= to_date(#{params.endTime},'yyyy-MM-dd HH24:mi:ss')
+			AND to_char(u.create_time, 'yyyy-mm-dd') &lt;= #{params.endTime}
 		</if>
 		<if test="deptId != null and deptId != 0">
 		    AND (u.dept_id = #{deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET(#{deptId}, ancestors) <![CDATA[ <> ]]> 0 ))

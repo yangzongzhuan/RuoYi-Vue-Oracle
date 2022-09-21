@@ -46,10 +46,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			AND r.role_key like concat(concat('%',#{roleKey}),'%')
 		</if>
 		<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-			and r.create_time &gt;= to_date(#{params.beginTime},'yyyy-MM-dd HH24:mi:ss')
+			AND to_char(r.create_time, 'yyyy-mm-dd') &gt;= #{params.beginTime}
 		</if>
 		<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-			and r.create_time &lt;= to_date(#{params.endTime},'yyyy-MM-dd HH24:mi:ss')
+			AND to_char(r.create_time, 'yyyy-mm-dd') &lt;= #{params.endTime}
 		</if>
 		<!-- 数据范围过滤 -->
 		${params.dataScope}
