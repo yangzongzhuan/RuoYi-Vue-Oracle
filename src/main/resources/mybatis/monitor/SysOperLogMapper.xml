@@ -20,11 +20,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="jsonResult"     column="json_result"    />
 		<result property="status"         column="status"         />
 		<result property="errorMsg"       column="error_msg"      />
+		<result property="costTime"       column="cost_time"      />
 		<result property="operTime"       column="oper_time"      />
 	</resultMap>
 
 	<sql id="selectOperLogVo">
-        select oper_id, title, business_type, method, request_method, operator_type, oper_name, dept_name, oper_url, oper_ip, oper_location, oper_param, json_result, status, error_msg, oper_time
+        select oper_id, title, business_type, method, request_method, operator_type, oper_name, dept_name, oper_url, oper_ip, oper_location, oper_param, json_result, status, error_msg, cost_time, oper_time
         from sys_oper_log
     </sql>
     
@@ -48,6 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="jsonResult != null and jsonResult != ''">json_result,</if>
 			<if test="status != null and status != ''">status,</if>
 			<if test="errorMsg != null and errorMsg != ''">error_msg,</if>
+			<if test="costTime != null and costTime != ''">cost_time,</if>
 			oper_time
 		)values(
 			<if test="operId != null and operId != 0">#{operId},</if>
@@ -65,6 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="jsonResult != null and jsonResult != ''">#{jsonResult},</if>
 			<if test="status != null and status != ''">#{status},</if>
 			<if test="errorMsg != null and errorMsg != ''">#{errorMsg},</if>
+			<if test="costTime != null and costTime != ''">#{costTime},</if>
 			sysdate
 		)
 	</insert>

@@ -571,7 +571,8 @@ create table sys_oper_log (
   oper_param        varchar2(2000)  default '',
   json_result       varchar2(2000)  default '',
   status            number(1)       default 0,
-  error_msg         varchar2(2000)  default '' ,
+  error_msg         varchar2(2000)  default '',
+  cost_time         number(20)      default 0,
   oper_time         date
 );
 
@@ -593,6 +594,7 @@ comment on column sys_oper_log.oper_param     is '请求参数';
 comment on column sys_oper_log.json_result    is '返回参数';
 comment on column sys_oper_log.status         is '操作状态（0正常 1异常）';
 comment on column sys_oper_log.error_msg      is '错误消息';
+comment on column sys_oper_log.cost_time      is '消耗时间';
 comment on column sys_oper_log.oper_time      is '操作时间';
 
 
