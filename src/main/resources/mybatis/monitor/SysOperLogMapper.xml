@@ -94,10 +94,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				AND oper_name like concat(concat('%',#{operName}),'%')
 			</if>
 			<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-				AND to_char(oper_time, 'yyyy-mm-dd') &gt;= #{params.beginTime}
+				AND oper_time &gt;= to_date(#{params.beginTime}, 'yyyy-mm-dd hh24:mi:ss')
 			</if>
 			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-				AND to_char(oper_time, 'yyyy-mm-dd') &lt;= #{params.endTime}
+				AND oper_time &lt;= to_date(#{params.endTime}, 'yyyy-mm-dd hh24:mi:ss')
 			</if>
 		</where>
 		order by oper_id desc
