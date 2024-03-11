@@ -42,6 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				AND to_char(create_time, 'yyyy-mm-dd') &lt;= #{params.endTime}
 			</if>
 		</where>
+		order by create_time desc
 	</select>
 	
 	<select id="selectJobLogAll" resultMap="SysJobLogResult">
