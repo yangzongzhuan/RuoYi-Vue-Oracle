@@ -560,7 +560,7 @@ create table sys_oper_log (
   oper_id           number(20)      not null ,
   title             varchar2(50)    default '',
   business_type     number(2)       default 0,
-  method            varchar2(100)   default '',
+  method            varchar2(200)   default '',
   request_method    varchar(10)     default '',
   operator_type     number(1)       default 0,
   oper_name         varchar2(50)    default '',
