@@ -1,0 +1,3 @@
+由于Oracle驱动没有发布到中央仓库，可以在此目录下开启终端，执行以下命令同步到的本地Maven仓库目录。
+
+mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc8 -Dversion=12.2.0.1 -Dpackaging=jar -Dfile=ojdbc8-12.2.0.1.jar

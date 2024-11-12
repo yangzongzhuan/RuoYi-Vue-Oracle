@@ -35,7 +35,7 @@
         <poi.version>4.1.2</poi.version>
         <oshi.version>6.6.5</oshi.version>
         <velocity.version>2.3</velocity.version>
-        <oracle.version>10.2.0.4.0</oracle.version>
+        <oracle.version>12.2.0.1</oracle.version>
         <!-- override dependency version -->
         <tomcat.version>9.0.96</tomcat.version>
         <logback.version>1.2.13</logback.version>
@@ -98,7 +98,7 @@
         <!-- oracle驱动-->
         <dependency>
             <groupId>com.oracle</groupId>
-            <artifactId>ojdbc14</artifactId>
+            <artifactId>ojdbc8</artifactId>
             <version>${oracle.version}</version>
         </dependency>
 
@@ -258,15 +258,6 @@
 	        <releases>
 	            <enabled>true</enabled>
 	        </releases>
-	    </repository>
-	    <!--oracle驱动没有发布到中央仓库，只能从此仓库下载-->
-	    <repository>
-	        <id>jeecg</id>
-	        <name>jeecg Repository</name>
-	        <url>http://maven.jeewx.com/nexus/content/repositories/jeecg</url>
-	        <snapshots>
-	            <enabled>false</enabled>
-	        </snapshots>
 	    </repository>
 	</repositories>
 
