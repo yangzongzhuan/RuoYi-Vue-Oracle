@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.druid.DbType;
 import com.alibaba.druid.sql.SQLUtils;
@@ -67,12 +68,12 @@ public class GenController extends BaseController
      * 获取代码生成信息
      */
     @PreAuthorize("@ss.hasPermi('tool:gen:query')")
-    @GetMapping(value = "/{talbleId}")
-    public AjaxResult getInfo(@PathVariable Long talbleId)
+    @GetMapping(value = "/{tableId}")
+    public AjaxResult getInfo(@PathVariable Long tableId)
     {
-        GenTable table = genTableService.selectGenTableById(talbleId);
+        GenTable table = genTableService.selectGenTableById(tableId);
         List<GenTable> tables = genTableService.selectGenTableAll();
-        List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(talbleId);
+        List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("info", table);
         map.put("rows", list);
@@ -112,12 +113,12 @@ public class GenController extends BaseController
     @PreAuthorize("@ss.hasPermi('tool:gen:import')")
     @Log(title = "代码生成", businessType = BusinessType.IMPORT)
     @PostMapping("/importTable")
-    public AjaxResult importTableSave(String tables)
+    public AjaxResult importTableSave(@RequestParam("tables") String tables, @RequestParam("tplWebType") String tplWebType)
     {
         String[] tableNames = Convert.toStrArray(tables);
         // 查询表信息
         List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames);
-        genTableService.importGenTable(tableList, SecurityUtils.getUsername());
+        genTableService.importGenTable(tableList, tplWebType, SecurityUtils.getUsername());
         return success();
     }
 
@@ -127,7 +128,7 @@ public class GenController extends BaseController
     @PreAuthorize("@ss.hasRole('admin')")
     @Log(title = "创建表", businessType = BusinessType.OTHER)
     @PostMapping("/createTable")
-    public AjaxResult createTableSave(String sql)
+    public AjaxResult createTableSave(@RequestParam("sql") String sql, @RequestParam("tplWebType") String tplWebType)
     {
         try
         {
@@ -148,7 +149,7 @@ public class GenController extends BaseController
             }
             List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames.toArray(new String[tableNames.size()]));
             String operName = SecurityUtils.getUsername();
-            genTableService.importGenTable(tableList, operName);
+            genTableService.importGenTable(tableList, tplWebType, operName);
             return AjaxResult.success();
         }
         catch (Exception e)
