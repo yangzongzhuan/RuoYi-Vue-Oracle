@@ -107,7 +107,7 @@ mybatis:
   configLocation: classpath:mybatis/mybatis-config.xml
 
 # PageHelper分页插件
-pagehelper: 
+pagehelper:
   helperDialect: oracle
   supportMethodsArguments: true
   params: count=countSql
