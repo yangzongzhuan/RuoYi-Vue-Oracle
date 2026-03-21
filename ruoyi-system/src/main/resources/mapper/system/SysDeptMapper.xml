@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.system.mapper.SysDeptMapper">
+<mapper namespace="com.ruoyi.project.system.mapper.SysDeptMapper">
 
 	<resultMap type="SysDept" id="SysDeptResult">
 		<id     property="deptId"     column="dept_id"     />
@@ -158,5 +158,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteDeptById" parameterType="Long">
 		update sys_dept set del_flag = '2' where dept_id = #{deptId}
 	</delete>
-
-</mapper> 
+	
+	<update id="updateDeptSort" parameterType="SysDept">
+		update sys_dept set order_num = #{orderNum} where dept_id = #{deptId}
+	</update>
+</mapper>
