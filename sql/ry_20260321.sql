@@ -881,6 +881,8 @@ create table sys_job_log (
   job_message         varchar2(500),
   status              char(1)          default '0',
   exception_info      varchar2(2000)   default '',
+  start_time          date,
+  end_time            date,
   create_time         date
 );
 
@@ -894,6 +896,8 @@ comment on column sys_job_log.invoke_target     is '调用目标字符串';
 comment on column sys_job_log.job_message       is '日志信息';
 comment on column sys_job_log.status            is '执行状态（0正常 1失败）';
 comment on column sys_job_log.exception_info    is '异常信息';
+comment on column sys_job_log.start_time        is '执行开始时间';
+comment on column sys_job_log.end_time          is '执行结束时间';
 comment on column sys_job_log.create_time       is '创建时间';
 
 
@@ -939,11 +943,39 @@ comment on column sys_notice.remark            is '备注';
 -- ----------------------------
 insert into sys_notice values('1', '温馨提醒：2018-07-01 若依新版本发布啦', '2', '新版本内容', '0', 'admin', sysdate, '', null, '管理员');
 insert into sys_notice values('2', '维护通知：2018-07-01 若依系统凌晨维护', '1', '维护内容',   '0', 'admin', sysdate, '', null, '管理员');
+insert into sys_notice values('3', '若依开源框架介绍', '1', '<p><span style=\"color: rgb(230, 0, 0);\">项目介绍</span></p><p><font color=\"#333333\">RuoYi开源项目是为企业用户定制的后台脚手架框架，为企业打造的一站式解决方案，降低企业开发成本，提升开发效率。主要包括用户管理、角色管理、部门管理、菜单管理、参数管理、字典管理、</font><span style=\"color: rgb(51, 51, 51);\">岗位管理</span><span style=\"color: rgb(51, 51, 51);\">、定时任务</span><span style=\"color: rgb(51, 51, 51);\">、</span><span style=\"color: rgb(51, 51, 51);\">服务监控、登录日志、操作日志、代码生成等功能。其中，还支持多数据源、数据权限、国际化、Redis缓存、Docker部署、滑动验证码、第三方认证登录、分布式事务、</span><font color=\"#333333\">分布式文件存储</font><span style=\"color: rgb(51, 51, 51);\">、分库分表处理等技术特点。</span></p><p><img src="https://foruda.gitee.com/images/1705030583977401651/5ed5db6a_1151004.png" style="width: 64px;"></p><p><span style=\"color: rgb(230, 0, 0);\">官网及演示</span></p><p><span style=\"color: rgb(51, 51, 51);\">若依官网地址： </span><a href=\"http://ruoyi.vip\" target=\"_blank\">http://ruoyi.vip</a><a href=\"http://ruoyi.vip\" target=\"_blank\"></a></p><p><span style=\"color: rgb(51, 51, 51);\">若依文档地址： </span><a href=\"http://doc.ruoyi.vip\" target=\"_blank\">http://doc.ruoyi.vip</a><br></p><p><span style=\"color: rgb(51, 51, 51);\">演示地址【不分离版】： </span><a href=\"http://demo.ruoyi.vip\" target=\"_blank\">http://demo.ruoyi.vip</a></p><p><span style=\"color: rgb(51, 51, 51);\">演示地址【分离版本】： </span><a href=\"http://vue.ruoyi.vip\" target=\"_blank\">http://vue.ruoyi.vip</a></p><p><span style=\"color: rgb(51, 51, 51);\">演示地址【微服务版】： </span><a href=\"http://cloud.ruoyi.vip\" target=\"_blank\">http://cloud.ruoyi.vip</a></p><p><span style=\"color: rgb(51, 51, 51);\">演示地址【移动端版】： </span><a href=\"http://h5.ruoyi.vip\" target=\"_blank\">http://h5.ruoyi.vip</a></p><p><br style=\"color: rgb(48, 49, 51); font-family: Helvetica Neue, Helvetica, Arial, sans-serif; font-size: 12px;\"></p>', '0', 'admin', sysdate, '', null, '管理员');
 commit;
 
 
 -- ----------------------------
--- 18、代码生成业务表
+-- 18、公告已读记录表
+-- ----------------------------
+create sequence seq_sys_notice_read
+ increment by 1
+ start with 10
+ nomaxvalue
+ nominvalue
+ cache 20;
+
+create table sys_notice_read (
+  read_id           number(20)      not null,
+  notice_id         number(20)      not null,
+  user_id           number(20)      not null,
+  read_time         date            not null
+);
+
+alter table sys_notice_read add constraint pk_sys_notice_read primary key (read_id);
+alter table sys_notice_read add constraint uk_sys_notice_read unique (user_id, notice_id);
+
+comment on table  sys_notice_read                   is '公告已读记录表';
+comment on column sys_notice_read.read_id           is '已读主键seq_sys_notice_read.nextval';
+comment on column sys_notice_read.notice_id         is '公告id';
+comment on column sys_notice_read.user_id           is '用户id';
+comment on column sys_notice_read.read_time         is '阅读时间';
+
+
+-- ----------------------------
+-- 19、代码生成业务表
 -- ----------------------------
 create sequence seq_gen_table
  increment by 1
@@ -1003,7 +1035,7 @@ comment on column gen_table.remark            is '备注';
 
 
 -- ----------------------------
--- 19、代码生成业务表字段
+-- 20、代码生成业务表字段
 -- ----------------------------
 create sequence seq_gen_table_column
  increment by 1
