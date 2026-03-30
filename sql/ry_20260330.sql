@@ -998,6 +998,7 @@ create table gen_table (
   business_name     varchar2(30),
   function_name     varchar2(50),
   function_author   varchar2(50),
+  form_col_num      number(1)        default 1,
   gen_type          char(1)          default '0',
   gen_path          varchar2(200)    default '/',
   options           varchar2(1000),
@@ -1024,6 +1025,7 @@ comment on column gen_table.module_name       is '生成模块名';
 comment on column gen_table.business_name     is '生成业务名';
 comment on column gen_table.function_name     is '生成功能名';
 comment on column gen_table.function_author   is '生成功能作者';
+comment on column gen_table.form_col_num      is '表单布局（单列 双列 三列）';
 comment on column gen_table.gen_type          is '生成代码方式（0zip压缩包 1自定义路径）';
 comment on column gen_table.gen_path          is '生成路径（不填默认项目路径）';
 comment on column gen_table.options           is '其它生成选项';
