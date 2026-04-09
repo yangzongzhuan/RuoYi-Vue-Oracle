@@ -1,4 +1,4 @@
-package com.ruoyi.common.validation;
+package com.ruoyi.common.xss;
 
 import com.ruoyi.common.utils.StringUtils;
 import javax.validation.ConstraintValidator;

@@ -5,7 +5,7 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ruoyi.common.validation.Xss;
+import com.ruoyi.common.xss.Xss;
 import com.ruoyi.framework.web.domain.BaseEntity;
 
 /**
