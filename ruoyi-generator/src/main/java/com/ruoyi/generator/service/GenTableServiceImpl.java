@@ -219,7 +219,7 @@ public class GenTableServiceImpl implements IGenTableService
         VelocityContext context = VelocityUtils.prepareContext(table);
 
         // 获取模板列表
-        List<String> templates = VelocityUtils.getTemplateList(table.getTplCategory(), table.getTplWebType());
+        List<String> templates = VelocityUtils.getTemplateList(table);
         for (String template : templates)
         {
             // 渲染模板
@@ -253,6 +253,9 @@ public class GenTableServiceImpl implements IGenTableService
     {
         // 查询表信息
         GenTable table = genTableMapper.selectGenTableByName(tableName);
+        // 获取菜单id序列，用于生成菜单sql语句
+        long menuId = genTableMapper.selectMenuId();
+        table.setMenuId(menuId);
         // 设置主子表信息
         setSubTable(table);
         // 设置主键列信息
@@ -263,10 +266,10 @@ public class GenTableServiceImpl implements IGenTableService
         VelocityContext context = VelocityUtils.prepareContext(table);
 
         // 获取模板列表
-        List<String> templates = VelocityUtils.getTemplateList(table.getTplCategory(), table.getTplWebType());
+        List<String> templates = VelocityUtils.getTemplateList(table);
         for (String template : templates)
         {
-            if (!StringUtils.containsAny(template, "sql.vm", "api.js.vm", "index.vue.vm", "index-tree.vue.vm"))
+            if (!StringUtils.containsAny(template, "sql.vm", "api.js.vm", "api.ts.vm", "type.ts.vm", "index.ts.vm", "index.vue.vm", "index-tree.vue.vm", "view.vue.vm"))
             {
                 // 渲染模板
                 StringWriter sw = new StringWriter();
@@ -371,6 +374,9 @@ public class GenTableServiceImpl implements IGenTableService
     {
         // 查询表信息
         GenTable table = genTableMapper.selectGenTableByName(tableName);
+        // 获取菜单id序列，用于生成菜单sql语句
+        long menuId = genTableMapper.selectMenuId();
+        table.setMenuId(menuId);
         // 设置主子表信息
         setSubTable(table);
         // 设置主键列信息
@@ -381,7 +387,7 @@ public class GenTableServiceImpl implements IGenTableService
         VelocityContext context = VelocityUtils.prepareContext(table);
 
         // 获取模板列表
-        List<String> templates = VelocityUtils.getTemplateList(table.getTplCategory(), table.getTplWebType());
+        List<String> templates = VelocityUtils.getTemplateList(table);
         for (String template : templates)
         {
             // 渲染模板
@@ -534,12 +540,14 @@ public class GenTableServiceImpl implements IGenTableService
             String treeName = paramsObj.getString(GenConstants.TREE_NAME);
             Long parentMenuId = paramsObj.getLongValue(GenConstants.PARENT_MENU_ID);
             String parentMenuName = paramsObj.getString(GenConstants.PARENT_MENU_NAME);
+            boolean isView = paramsObj.getBooleanValue(GenConstants.GEN_VIEW);
 
             genTable.setTreeCode(treeCode);
             genTable.setTreeParentCode(treeParentCode);
             genTable.setTreeName(treeName);
             genTable.setParentMenuId(parentMenuId);
             genTable.setParentMenuName(parentMenuName);
+            genTable.setView(isView);
         }
     }
 
