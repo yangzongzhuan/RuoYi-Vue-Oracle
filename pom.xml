@@ -25,15 +25,15 @@
         <java.version>1.8</java.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
         <pagehelper.spring.boot.starter.version>1.4.7</pagehelper.spring.boot.starter.version>
-        <fastjson.version>2.0.61</fastjson.version>
-        <druid.version>1.2.27</druid.version>
-        <commons.io.version>2.21.0</commons.io.version>
+        <fastjson.version>2.0.62</fastjson.version>
+        <druid.version>1.2.28</druid.version>
+        <commons.io.version>2.22.0</commons.io.version>
         <yauaa.version>7.32.0</yauaa.version>
         <jwt.version>0.9.1</jwt.version>
         <kaptcha.version>2.3.3</kaptcha.version>
         <swagger.version>3.0.0</swagger.version>
         <poi.version>4.1.2</poi.version>
-        <oshi.version>6.10.0</oshi.version>
+        <oshi.version>7.3.0</oshi.version>
         <velocity.version>2.3</velocity.version>
         <oracle.version>12.2.0.1</oracle.version>
         <!-- override dependency version -->
