@@ -17,20 +17,20 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
-        <spring-boot.version>4.0.3</spring-boot.version>
+        <spring-boot.version>4.0.6</spring-boot.version>
         <mybatis-spring-boot.version>4.0.1</mybatis-spring-boot.version>
         <druid.version>1.2.28</druid.version>
-        <yauaa.version>8.1.0</yauaa.version>
+        <yauaa.version>8.1.1</yauaa.version>
         <kaptcha.version>2.3.3</kaptcha.version>
-        <pagehelper.boot.version>2.1.1</pagehelper.boot.version>
-        <fastjson.version>2.0.61</fastjson.version>
-        <oshi.version>6.10.0</oshi.version>
-        <commons.io.version>2.21.0</commons.io.version>
+        <pagehelper.boot.version>4.1.0</pagehelper.boot.version>
+        <fastjson.version>2.0.62</fastjson.version>
+        <oshi.version>7.3.0</oshi.version>
+        <commons.io.version>2.22.0</commons.io.version>
         <poi.version>4.1.2</poi.version>
         <velocity.version>2.3</velocity.version>
         <jwt.version>0.9.1</jwt.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
-        <springdoc.version>3.0.2</springdoc.version>
+        <springdoc.version>3.0.3</springdoc.version>
         <oracle.version>12.2.0.1</oracle.version>
     </properties>
 
@@ -38,7 +38,7 @@
     <dependencyManagement>
         <dependencies>
 
-            <!-- SpringBoot的依赖配置-->
+            <!-- SpringBoot的依赖配置 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
